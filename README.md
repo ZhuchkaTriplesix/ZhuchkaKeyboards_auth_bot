@@ -23,6 +23,10 @@ python -m src.main
 
 - Монорепозиторий: `docs/microservices/01-auth.md`, `docs/submodules.md` (путь `bots/auth_bot`).
 
+## Процесс разработки (issue → ветка → тесты → PR)
+
+Одна **issue** — одна **ветка** от `dev` (`feature/<N>-<slug>` / `fix/<N>-<slug>`), **тесты** в рамках этой же задачи, один **PR** в `dev` этого репозитория. Не объединять несколько несвязанных задач в одной ветке или PR. Для **`services/auth`** — то же правило в [репозитории auth](https://github.com/ZhuchkaTriplesix/ZhuchkaKeyboards_auth); общее описание: [git-workflow.md в монорепо](https://github.com/ZhuchkaTriplesix/ZhuchkaKeyboards/blob/main/docs/git-workflow.md) (раздел «`services/auth` и `bots/auth_bot`»).
+
 ## Лицензия
 
 В корне лежит `LICENSE` из шаблона (MIT). Учёт авторства Reei-dp для исходного каркаса сохраняйте при существенном форке.
