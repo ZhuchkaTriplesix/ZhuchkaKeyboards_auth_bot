@@ -1,4 +1,5 @@
 import configparser
+import os
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -42,9 +43,14 @@ def load_config(config_path: Path | None = None) -> Config:
 
     bot_section = parser["bot"]
 
-    token = bot_section.get("token")
+    token = (bot_section.get("token") or "").strip()
+    env_token = (os.environ.get("TELEGRAM_BOT_TOKEN") or os.environ.get("BOT_TOKEN") or "").strip()
+    if env_token:
+        token = env_token
     if not token:
-        raise ValueError("bot.token is required in config.ini")
+        raise ValueError(
+            "bot.token is required (set in config.ini or TELEGRAM_BOT_TOKEN / BOT_TOKEN in the environment)"
+        )
 
     admin_ids_str = bot_section.get("admin_ids", "").strip()
     admin_ids = []
