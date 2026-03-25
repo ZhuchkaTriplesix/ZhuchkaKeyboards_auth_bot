@@ -1,0 +1,12 @@
+# https://docs.astral.sh/ruff/
+exclude = [".git", ".ruff_cache", ".venv", "venv", "__pycache__"]
+target-version = "py313"
+line-length = 100
+
+[lint]
+select = ["E", "W", "F", "I", "B", "UP", "SIM"]
+ignore = ["E501", "B008"]
+
+[format]
+quote-style = "double"
+indent-style = "space"

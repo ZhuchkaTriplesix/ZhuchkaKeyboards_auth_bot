@@ -19,6 +19,17 @@ python -m src.main
 
 Подробности по полям `config.ini` — в [upstream README](https://github.com/Reei-dp/aiogram-template#configuration) шаблона.
 
+## Тесты
+
+```bash
+pip install -r requirements.txt -r requirements-dev.txt
+ruff check src tests
+ruff format --check src tests
+pytest
+```
+
+Проверяется загрузка `config.ini` (`tests/test_config.py`). В CI на GitHub Actions: **ruff** + **pytest** (`.github/workflows/ci.yml`).
+
 ## Связанные документы
 
 - Монорепозиторий: `docs/microservices/01-auth.md`, `docs/submodules.md` (путь `bots/auth_bot`).

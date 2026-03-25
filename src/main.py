@@ -2,11 +2,12 @@ import asyncio
 import logging
 
 from aiogram import Bot, Dispatcher
-from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.client.default import DefaultBotProperties
+from aiogram.fsm.storage.memory import MemoryStorage
 
 from src.config import load_config
 from src.handlers.user import router
+from src.middlewares.environment import EnvironmentMiddleware
 
 logger = logging.getLogger(__name__)
 
@@ -14,17 +15,15 @@ logger = logging.getLogger(__name__)
 async def main():
     logging.basicConfig(
         level=logging.INFO,
-        format=u'%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s',
+        format="%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s",
     )
     logger.info("Starting bot")
     config = load_config()
 
     storage = MemoryStorage()
-    bot = Bot(
-        token=config.tg_bot.token,
-        default=DefaultBotProperties(parse_mode="HTML")
-    )
+    bot = Bot(token=config.tg_bot.token, default=DefaultBotProperties(parse_mode="HTML"))
     dp = Dispatcher(storage=storage)
+    dp.update.middleware(EnvironmentMiddleware(config=config))
 
     dp.include_router(router)
 
@@ -34,7 +33,7 @@ async def main():
         logger.error(f"Bot stopped with error: {e}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     try:
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
